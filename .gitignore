@@ -1,0 +1,21 @@
+# LaTeX 编译生成的垃圾文件
+*.aux
+*.log
+*.out
+*.toc  # 目录文件
+*.lof  # 图形列表
+*.lot  # 表格列表
+*.bbl
+*.blg
+*.synctex.gz
+
+
+
+# 系统/编辑器文件
+.DS_Store
+Thumbs.db
+*.swp  # Vim 临时文件
+
+# TeX 编辑器自动备份文件
+*.bak
+*.backup
