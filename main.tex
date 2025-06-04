@@ -1,0 +1,368 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage{eso-pic}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[export]{adjustbox}
+
+\hypersetup{hidelinks}
+
+%%%%%%%%%%%%%%%%%%%%
+% 设置
+%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0pt}					% 取消全局段落缩进
+\pagenumbering{gobble}						% 取消页码显示
+\setlist[itemize]{nosep                     % 取消 itemize 的默认间距
+    , before={\vspace*{-\parskip}}          % 取消 itemize 和后续段落之间的空白
+    , leftmargin=*}		                    % 取消 itemize 的左边距
+\setlist[enumerate]{leftmargin=*}	        % 取消 enumerate 的左边距
+\renewcommand{\arraystretch}{1.2}           % 设置表格行间距
+\linespread{1.25}                           % 设置正文行间距
+
+\titleformat{\section}					    % 将原标题前面的数字取消了
+  {\LARGE\bfseries\raggedright} 		      % 字体改为 LARGE，bold，左对齐
+  {}{0em}                      			  % 可用于添加全局标题前缀
+  {}                           			  % 可用于添加代码
+  [{\color{secondary_color}\titlerule}]     % 标题下方加一条线
+\titlespacing*{\section}{0cm}{*1.2}{*1.2}	% 标题左边留白，上方，下方
+
+% 修正：增加 headheight 避免尺寸警告
+\usepackage[
+	a4paper,
+	left=1.2cm,
+	right=1.2cm,
+	top=1.5cm,
+	bottom=1cm,
+	headheight=2.5cm, % 增加页眉高度
+	footskip=1.5cm,   % 增加页脚偏移
+	nohead
+]{geometry}                                 % 页面边距设置
+
+% 字体设置
+\setmainfont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=*-Bold,
+]{NotoSerifSC}
+
+\newlength{\iconwidth}
+\setlength{\iconwidth}{1.5em}                   % 设置 section 标题部分图标占用的宽度
+
+%%%%%%%%%%%%%%%%%%%%
+% 自定义命令
+%%%%%%%%%%%%%%%%%%%%
+
+% 学院
+\newcommand{\school}{网络与信息安全学院 | School of Cyber Engineering}
+
+% 联系方式
+\newcommand{\contact}{
+    \footnotesize
+    \textcolor{white}{
+        % 邮箱
+        \faEnvelope \quad \href{mailto:youremail@xidian.edu.cn}{youremail@xidian.edu.cn}
+        \hspace{4em}
+        % 手机号
+        \faPhone \quad  130-6666-0000
+        \hspace{4em}
+        % GitHub
+        \faGithub \quad \href{https://github.com/imamtom/XDU_CV}{GitHub 项目地址}
+    }
+}
+
+% 主题切换命令
+\newcommand{\setThemeRed}{
+    \definecolor{primary_color}{RGB}{220, 38, 38}
+    \definecolor{secondary_color}{RGB}{239, 68, 68}
+    % 同时设置页眉页脚的图片
+    \newcommand{\headerImage}{images/header_red.png}
+    \newcommand{\footerImage}{images/footer_red.png}
+    \newcommand{\backgroundImage}{images/xdu_logo_red.png}
+}
+\newcommand{\setThemeBlue}{
+    \definecolor{primary_color}{RGB}{37, 99, 235}
+    \definecolor{secondary_color}{RGB}{59, 130, 246}
+    % 同时设置页眉页脚的图片
+    \newcommand{\headerImage}{images/header_blue.png}
+    \newcommand{\footerImage}{images/footer_blue.png}
+    \newcommand{\backgroundImage}{images/xdu_logo_blue.png}
+}
+
+% 修正页眉页脚设置
+\pagestyle{fancy}
+\fancyhf{} % 清空默认
+
+
+% \AddToShipoutPictureBG 作用范围：所有后续页面
+% \AddToShipoutPictureBG* 作用范围：当前页面
+
+\AddToShipoutPictureBG{
+    % Placing the header image at the top
+    \begin{tikzpicture}[remember picture, overlay]
+        \node at (current page.north west) [
+        anchor=north west,
+        inner sep=0pt
+        ](header) {
+        \includegraphics[width=\paperwidth]{\headerImage}
+        };
+        \node[anchor=west](school_logo) at (header.west){
+            \hspace{0.5cm}
+            \includegraphics[width=0.24\textwidth]{images/xdu_logo_name_white.png}
+        };
+        \node[anchor=east](school_name) at(header.east){
+            \textcolor{white}{\textbf{\school}}
+            \hspace{0.5cm}
+        };
+    \end{tikzpicture}
+    
+    % Placing the footer image at the bottom
+    \begin{tikzpicture}[remember picture, overlay]
+        \node at (current page.south west) [
+        anchor=south west,
+        inner sep=0pt
+        ](footer) {
+        \includegraphics[width=\paperwidth]{\footerImage}
+        };
+        % 联系方式，不再以页脚的方式存在
+        % \node[anchor=center] at(footer.center){\contact};
+    \end{tikzpicture}
+    
+    % Placing the semi-transparent logo in the center
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[opacity=0.15] at ([xshift=0cm,yshift=-1cm,]current page.center) {
+        \includegraphics[width=0.7\paperwidth,keepaspectratio]{\backgroundImage}
+        };
+    \end{tikzpicture}
+}
+
+
+\begin{document}
+
+% 设置主题颜色
+\setThemeRed
+% \setThemeBlue
+
+% 第一页由于backgroundImage的原因，需要被裁去
+need to cut off
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%
+% 简历正文
+%%%%%%%%%%%%%%%%%%%%
+    
+    % % 个人信息
+    % \begin{minipage}[t]{\textwidth}
+        
+    %     % \faGraduationCap这类\fa开头的都是font awesome里的logo，想换成其他logo的话
+    %     可以看一下https://mirror-hk.koddos.net/CTAN/fonts/fontawesome5/doc/fontawesome5.pdf
+    %     https://fontawesome.com/
+    %         % 左边，照片，比例占行宽20
+
+        
+    % \begin{minipage}[t]{0.15\textwidth}
+    %     % 左侧照片
+    %     % \centering
+    %     \includegraphics[width=0.95\linewidth]{images/kun.png}
+    % \end{minipage}
+    % \hfill
+
+    % \end{minipage}
+    \begin{tabularx}{\textwidth}{@{}m{0.15\textwidth}>{\hspace{0em}}X@{}}
+        \vspace{2em}
+        \adjustbox{frame,margin=2pt}{\includegraphics[width=0.95\linewidth]{images/kun.png}}
+        &
+        % 右侧内容（用minipage或直接写）
+        \begin{minipage}[t]{\linewidth}
+            \begin{minipage}[t]{0.32\textwidth}
+                % 第一列第一行
+                \textbf{姓名}：ikun
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.32\textwidth}
+                % 第二列第一行
+                \textbf{出生年月}：2000.01
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.32\textwidth}
+                % 第三列第一行
+                \textbf{电话}：133-3333-3333
+            \end{minipage}
+            
+            \vspace{1em}
+            
+            \begin{minipage}[t]{0.32\textwidth}
+                % 第一列第二行
+                \textbf{性别}：鸡你太美
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.32\textwidth}
+                % 第二列第二行
+                \textbf{政治面貌}：群众
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.32\textwidth}
+                % 第三列第二行
+                \textbf{邮箱}：ikun@xidian.edu.cn
+            \end{minipage}
+        \end{minipage}
+    \end{tabularx}
+    \vspace{0.1em}
+
+
+    % 教育背景
+    \begin{minipage}[t]{\textwidth}
+        \section[教育背景]{\makebox[\iconwidth][c]{\color{primary_color}{\faGraduationCap}}\quad 教育背景}
+        
+        \vspace{0.5em}
+        {\large \textbf{西安电子科技大学}}，博士 \hfill 2021.09--2025.06
+        \begin{itemize}
+            \item 网络空间安全专业\ 网络与信息安全学院 \hfill 西安
+            \item \textbf{研究方向}：LLM安全、联邦学习、隐私计算 \hfill 导师：张三\ 教授
+        \end{itemize}
+
+        \vspace{0.5em}
+        {\large \textbf{西安电子科技大学}}，硕士 \hfill 2018.09--2021.06
+        \begin{itemize}
+            \item 网络空间安全专业\ 网络与信息安全学院 \hfill 西安
+            \item \textbf{研究方向} LLM安全、密码学、区块链 \hfill 导师：张三\ 教授
+            \item \textbf{GPA}：4.8 / 4.8（排名：1 / 250）
+        \end{itemize}
+
+        \vspace{0.5em}
+        {\large \textbf{西安电子科技大学}}，本科 \hfill 2014.09--2018.06
+        \begin{itemize}
+            \item 网络空间安全专业\ 网络与信息安全学院 \hfill 西安
+            % \item \textbf{主修课程}：课程1、课程2、课程3、课程4\ 等。
+            \item \textbf{GPA}：4.8 / 4.8（排名：1 / 250）
+        \end{itemize}
+
+        \vspace{1.2em}
+    \end{minipage}
+
+
+
+    
+    % 科研成果    
+    \begin{minipage}[t]{\textwidth}
+        \section[科研成果]{\makebox[\iconwidth][c]{\color{primary_color}{\faFile*[regular]}}\quad 科研成果}
+        \begin{itemize}
+            \item \textbf{Your name}, He Wangkai, Zhang san, et al.  A method of network attack-defense game and collaborative defense decision-making based on hierarchical multi-agent reinforcement learning[J]. Computers \& Security, 2024, 142: 103871. \hfill \textbf{唯一通信}（中科院一区）
+            \vspace{0.5em}
+            \item 授权发明专利 一种基于卷积神经网络的美食识别系统(ZL202520020202). \hfill \textbf{第三发明人}
+        \end{itemize}
+        
+        \vspace{1.2em}
+    \end{minipage}
+
+    % 项目经历\科研经历\项目与教学（标题请根据需要修改）
+    \begin{minipage}[t]{\textwidth}
+        \section[科研项目]{\makebox[\iconwidth][c]{\color{primary_color}{\faChalkboardTeacher}}\quad 科研项目}
+        
+        {\large \textbf{国家自然科学基金面上项目“基于卷积神经网络的美食识别系统”(6356781)}} \hfill 2020年9月--2021年9月
+        \begin{itemize}
+            \item 作为项目组成员参与，负责某某模块的设计与实现。
+        \end{itemize}
+
+        {\large \textbf{国家重点研发计划基金资助项目“基于卷积神经网络的美食识别系统”(2025YF102020)}} \hfill 2020年9月--2021年9月
+        \begin{itemize}
+            \item 作为学生骨干参与，负责某某模块的设计与实现。
+        \end{itemize}
+        
+        \vspace{1.2em}
+    \end{minipage}
+    
+    % 技能竞赛
+    \begin{minipage}[t]{\textwidth}
+        \section[技能竞赛]{\makebox[\iconwidth][c]{\color{primary_color}{\faAtom}}\quad 技能竞赛}
+
+        \begin{itemize}
+            \item \textbf{竞赛名称1}，获奖等级 \hfill 2020年9月
+            \item \textbf{竞赛名称2}，获奖等级 \hfill 2021年6月
+            \item \textbf{竞赛名称3}，获奖等级 \hfill 2022年3月
+        \end{itemize}
+        
+    \vspace{1.2em}
+    \end{minipage}
+
+    % 荣誉奖项
+    \begin{minipage}[t]{\textwidth}
+        \section[荣誉奖项]{\makebox[\iconwidth][c]{\color{primary_color}{\faCrown}}\quad 荣誉奖项}
+        
+
+        \begin{itemize}
+            \item 一等奖学金三次 \hfill 硕士期间
+            \item 二等奖学金三次 \hfill 博士期间
+            \item 优秀学生干部 \hfill 2021年6月
+            \item 研究生国家奖学金 \hfill 2022年9月
+        \end{itemize}
+        
+    \vspace{1.2em}
+    \end{minipage}
+
+    % 实习经历
+    \begin{minipage}[t]{\textwidth}
+        \section[实习经历]{\makebox[\iconwidth][c]{\color{primary_color}{\faChalkboardTeacher}}\quad 实习经历}
+        
+        {\large \textbf{蚂蚁金融}} \hfill 2020年8月--2021年9月
+        \begin{itemize}
+            \item \textbf{Java开发实习生} ，负责某某项目的开发工作。
+        \end{itemize}
+        \vspace{0.5em}
+        {\large \textbf{华为}} \hfill 2022年8月--2023年9月
+        \begin{itemize}
+            \item \textbf{C++开发实习生}，负责某某项目的开发工作。
+        \end{itemize}
+
+    \vspace{1.2em}
+    \end{minipage}
+
+
+    % 个人总结
+    \begin{minipage}[t]{\textwidth}
+        \section[个人总结]{\makebox[\iconwidth][c]{\color{primary_color}{\faUserCircle}}\quad 个人总结}
+        
+        \begin{itemize}
+            \item 勤奋好学，具有较强的学习能力和适应能力。
+            \item 具有良好的团队合作精神和沟通能力。
+        \end{itemize}
+        
+    \vspace{1.2em}
+    \end{minipage}
+
+
+    % % 如果每行的内容不是很多，可以考虑使用 minipage，将内容分列展示
+    % \begin{minipage}[t]{0.6\textwidth}
+    %     \section[技能特长]{\makebox[\iconwidth][c]{\color{primary_color}{\faWrench}}\quad 技能特长}
+    %     \begin{itemize}
+    %     \setlength{\itemsep}{0.5em}
+    %         \item 熟练使用 Python、Jvav、Rust 等编程语言。
+    %         \item 熟练使用 Tensorflow、Pytorch 等深度学习框架。
+    %         \item 熟悉 Windows 与 Linux 端开发。
+    %     \end{itemize}
+    % \end{minipage}
+    % \hfill
+    % \begin{minipage}[t]{0.35\textwidth}
+    %     \section[兴趣爱好]{\makebox[\iconwidth][c]{\color{primary_color}{\faStar}}\quad 兴趣爱好}
+    %     \begin{itemize}
+    %     \setlength{\itemsep}{0.5em}
+    %         \item 我喜欢唱
+    %         \item 跳
+    %         \item Rap
+    %     \end{itemize}
+    % \end{minipage}
+    
+
+
+\end{document}
